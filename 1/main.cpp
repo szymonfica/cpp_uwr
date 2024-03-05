@@ -24,7 +24,6 @@ string toroman(int x) {
 }
 
 int main(int argc, char* argv[]) {
-    BOOST
 
     for(int i=1; i<argc; i++) {
         int x=0;

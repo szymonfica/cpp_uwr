@@ -2,9 +2,14 @@
 
 g++ -std=c++11 -o main main.cpp
 
-if [ $? -eq 0 ]; then
-    ./main 7 13 27 > wyniki.txt
-    echo "Program został uruchomiony." >> wyniki.txt
+if [ $? -eq 0 ]
+then
+    echo -n > wyniki.txt
+    for i in "$@"; do
+        ./main $i >> wyniki.txt
+    done
+
+    echo "Program został uruchomiony."
 else
-    echo "Kompilacja nie powiodła się. Sprawdź błędy kompilacji." >> wyniki.txt
+    echo "Kompilacja nie powiodła się. Sprawdź błędy kompilacji."
 fi
