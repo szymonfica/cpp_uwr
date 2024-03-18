@@ -2,19 +2,24 @@
 
 triangle::triangle(point a, point b, point c) {
     if(a.getX() == b.getX() && a.getY() == b.getY()) {
-        throw invalid_argument("error");
+        throw invalid_argument("Error: Triangle must consist of three different points.");
     }
     else if(a.getX() == c.getX() && a.getY() == c.getY()) {
-        throw invalid_argument("error");
+        throw invalid_argument("Error: Triangle must consist of three different points.");
     }
     else if(b.getX() == c.getX() && b.getY() == c.getY()) {
-        throw invalid_argument("error");
+        throw invalid_argument("Error: Triangle must consist of three different points.");
     }
     else {
         this->a = a;
         this->b = b;
         this->c = c;
     }
+}
+triangle::triangle(const triangle& t) {
+    this->a = t.a;
+    this->b = t.b;
+    this->c = t.c;
 }
 point triangle::get_A() { return this->a; }
 point triangle::get_B() { return this->b; }
@@ -23,34 +28,34 @@ void triangle::set_A(point p) {this->a = p; }
 void triangle::set_B(point p) {this->b = p; }
 void triangle::set_C(point p) {this->c = p; }
 void triangle::translation(vec v) {
-    this->get_A().translation(v);
-    this->get_B().translation(v);
-    this->get_C().translation(v);
+    this->a.translation(v);
+    this->b.translation(v);
+    this->c.translation(v);
 }
 void triangle::rotate(point p, double angle) {
-    this->get_A().rotate(p, angle);
-    this->get_B().rotate(p, angle);
-    this->get_C().rotate(p, angle);
+    this->a.rotate(p, angle);
+    this->b.rotate(p, angle);
+    this->c.rotate(p, angle);
 }
 void triangle::cen_sym(point p) {
-    this->get_A().cen_sym(p);
-    this->get_B().cen_sym(p);
-    this->get_C().cen_sym(p);
+    this->a.cen_sym(p);
+    this->b.cen_sym(p);
+    this->c.cen_sym(p);
 }
 void triangle::sym_X() {
-    this->get_A().sym_X();
-    this->get_B().sym_X();
-    this->get_C().sym_X();
+    this->a.sym_X();
+    this->b.sym_X();
+    this->c.sym_X();
 }
 void triangle::sym_Y() {
-    this->get_A().sym_Y();
-    this->get_B().sym_Y();
-    this->get_C().sym_Y();
+    this->a.sym_Y();
+    this->b.sym_Y();
+    this->c.sym_Y();
 }
 void triangle::sym_line(linear l) {
-    this->get_A().sym_line(l);
-    this->get_B().sym_line(l);
-    this->get_C().sym_line(l);
+    this->a.sym_line(l);
+    this->b.sym_line(l);
+    this->c.sym_line(l);
 }
 double triangle::perimeter() {
     return ::distance(a, b) + ::distance(b, c) + ::distance(c, a);

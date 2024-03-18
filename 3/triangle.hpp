@@ -9,6 +9,8 @@ private:
 
 public:
     triangle(point a, point b, point c);
+    triangle(const triangle& t);
+    
     point get_A();
     point get_B();
     point get_C();

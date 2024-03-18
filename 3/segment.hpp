@@ -6,17 +6,16 @@
 
 class segment {
 private:
-    point* a;
-    point* b;
+    point a;
+    point b;
 
 public:
-    //segment(point a, point b);
-    segment(point* a, point* b);
+    segment(point a, point b);
     segment(const segment& s);
 
-    const point* get_A();
-    const point get_B();
-    /*void set_A(point p);
+    point get_A();
+    point get_B();
+    void set_A(point p);
     void set_B(point p);
 
     void translation(vec v);
@@ -27,7 +26,7 @@ public:
     void sym_line(linear l);
 
     double length();
-    bool point_on_segment(point c);*/
+    bool point_on_segment(point c);
 
 };
 
