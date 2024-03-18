@@ -2,7 +2,7 @@
 
 if [ ! -f "dane.txt" ]
 then
-    echo "Plik dane.txt nie istnieje."
+    echo "File dane.txt does not exist."
     exit 1
 fi
 
@@ -13,11 +13,11 @@ then
     if [ $# == 3 ]
     then 
         ./main $1 $2 $3
-        echo "Program został uruchomiony."
+        echo "The program has been successfully compiled and run"
     else
-        echo "Nieprawidłowa ilość argumentów." 
+        echo "Incorrect number of arguments." 
     fi
      
 else
-    echo "Kompilacja nie powiodła się. Sprawdź błędy kompilacji."
+    echo "Compilation failed. Check for compilation errors."
 fi

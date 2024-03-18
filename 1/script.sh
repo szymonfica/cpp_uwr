@@ -1,6 +1,6 @@
 #!/bin/bash
 
-g++ -std=c++11 -o main main.cpp
+g++ -std=c++17 -o main main.cpp
 
 if [ $? -eq 0 ]
 then
@@ -9,7 +9,7 @@ then
         ./main $i >> wyniki.txt
     done
 
-    echo "Program został uruchomiony."
+    echo "The program has been successfully compiled and run."
 else
-    echo "Kompilacja nie powiodła się. Sprawdź błędy kompilacji."
+    echo "Compilation failed. Check for compilation errors."
 fi

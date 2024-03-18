@@ -7,6 +7,6 @@ if [ $? -eq 0 ]
     then
         ./main
     else
-        echo "Kompilacja nie powiodła się. Sprawdź błędy kompilacji."
+        echo "Compilation failed. Check for compilation errors."
 fi
 
