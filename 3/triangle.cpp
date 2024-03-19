@@ -1,20 +1,32 @@
 #include "triangle.hpp"
 
+double dummy_area(int x1, int y1, int x2, int y2, int x3, int y3) {
+   return abs((x1*(y2-y3) + x2*(y3-y1)+ x3*(y1-y2))/2.0);
+}
 triangle::triangle(point a, point b, point c) {
-    if(a.getX() == b.getX() && a.getY() == b.getY()) {
-        throw invalid_argument("Error: Triangle must consist of three different points.");
+    try {
+        if(::dummy_area(a.getX(), a.getY(), b.getX(), b.getY(), c.getX(), c.getY()) == 0) {
+            throw invalid_argument("Error: Triangle must consist of three non-collinear points.");
+        }
+        if(a.getX() == b.getX() && a.getY() == b.getY()) {
+            throw invalid_argument("Error: Triangle must consist of three different points.");
+        }
+        else if(a.getX() == c.getX() && a.getY() == c.getY()) {
+            throw invalid_argument("Error: Triangle must consist of three different points.");
+        }
+        else if(b.getX() == c.getX() && b.getY() == c.getY()) {
+            throw invalid_argument("Error: Triangle must consist of three different points.");
+        }
+        else {
+            this->a = a;
+            this->b = b;
+            this->c = c;
+        }
     }
-    else if(a.getX() == c.getX() && a.getY() == c.getY()) {
-        throw invalid_argument("Error: Triangle must consist of three different points.");
+    catch(invalid_argument const& ex) {
+        cerr << ex.what() << '\n';
     }
-    else if(b.getX() == c.getX() && b.getY() == c.getY()) {
-        throw invalid_argument("Error: Triangle must consist of three different points.");
-    }
-    else {
-        this->a = a;
-        this->b = b;
-        this->c = c;
-    }
+    
 }
 triangle::triangle(const triangle& t) {
     this->a = t.a;
@@ -65,17 +77,18 @@ double triangle::area() {
     double p = (x+y+z) / 2.0;
     return sqrt(p * (p-x) * (p-y) * (p-z));
 }
+bool dummy_inside(int x1, int y1, int x2, int y2, int x3, int y3, int x, int y) {   
+    float A = dummy_area(x1, y1, x2, y2, x3, y3);
+    float A1 = dummy_area (x, y, x2, y2, x3, y3);
+    float A2 = dummy_area (x1, y1, x, y, x3, y3);
+    float A3 = dummy_area (x1, y1, x2, y2, x, y);
+    return (A == A1 + A2 + A3);
+}
 bool triangle::point_inside_triangle(point p) {
-    vec AB, AC, AP;
-    AB.setX(this->b.getX() - this->a.getX());
-    AB.setY(this->b.getY() - this->a.getY());
-    AC.setX(this->c.getX() - this->a.getX());
-    AC.setY(this->c.getY() - this->a.getY());
-    AP.setX(p.getX() - this->a.getX());
-    AP.setY(p.getY() - this->a.getY());
-    double first = AB.getX() * AP.getY() - AB.getY() * AP.getX();
-    double second = AC.getX() * AP.getY() - AC.getY() * AP.getX();
-    return first * second > 0;
+    return dummy_inside(this->get_A().getX(), this->get_A().getX(),
+                        this->get_B().getX(), this->get_B().getX(),
+                        this->get_C().getX(), this->get_C().getX(), 
+                        p.getX(), p.getY());
 }
 
 bool parallel(segment a, segment b) {

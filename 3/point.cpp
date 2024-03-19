@@ -12,10 +12,6 @@ point::point() {
     this->x = 0;
     this->y = 0;
 }
-point::~point() {
-    this->x = 0;
-    this->y = 0;
-}
 double point::getX() { return x; }
 double point::getY() { return y; }
 void point::setX(double x) { this->x = x; }

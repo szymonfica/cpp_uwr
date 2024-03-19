@@ -1,12 +1,17 @@
 #include "segment.hpp"
 
 segment::segment(point a, point b) {
-    if(a.getX() == b.getX() && a.getY() == b.getY()) {
-        throw invalid_argument("Error: Segment must consist of two different points.");
+    try {
+        if(a.getX() == b.getX() && a.getY() == b.getY()) {
+            throw invalid_argument("Error: Segment must consist of two different points.");
+        }
+        else {
+            this->a = a;
+            this->b = b;
+        }
     }
-    else {
-        this->a = a;
-        this->b = b;
+    catch(invalid_argument const& ex) {
+        cerr << ex.what() << '\n';
     }
 }
 segment::segment(const segment& s) {

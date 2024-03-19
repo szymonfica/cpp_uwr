@@ -18,13 +18,18 @@ void vec::setX(double x) { this->x = x; }
 void vec::setY(double y) { this->y = y; }
 
 linear::linear(double a, double b, double c) {
-    if(a == 0 && b == 0) {
-        throw invalid_argument("error");
+    try {
+        if(a == 0 && b == 0) {
+            throw invalid_argument("Error: A == B == 0.");
+        }
+        else {
+            this->a = a;
+            this->b = b;
+            this->c = c;
+        }
     }
-    else {
-        this->a = a;
-        this->b = b;
-        this->c = c;
+    catch(invalid_argument const& ex) {
+        cerr << ex.what() << '\n';
     }
 }
 linear::~linear() {

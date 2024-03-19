@@ -11,7 +11,6 @@ public:
     point(double x, double y);
     point(const point &p);
     point();
-    ~point();
 
     double getX();
     double getY();
@@ -25,7 +24,6 @@ public:
     void sym_Y();
     void sym_line(linear l);
     
-
 };
 
 #endif
