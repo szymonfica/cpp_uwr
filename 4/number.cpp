@@ -24,25 +24,18 @@ number& number::operator=(number &&other) {
         this->idx = other.idx;
         this->currently_remembered = other.currently_remembered;
         other.history = nullptr;
-        
     }
     return *this;
 }
 number::~number() {
-    idx = 0;
     delete[] history;
 }
 const double number::get() {
     return this->history[this->idx];
 }
 const double number::get_previous(int n) {
-    try {
-        if(n > this->currently_remembered) {
-            throw invalid_argument("Index out of range.");
-        }
-    }
-    catch(invalid_argument const& ex) {
-        cerr << ex.what() << '\n';
+    if(n > this->currently_remembered) {
+        throw invalid_argument("Index out of range.");
     }
     return this->history[((this->idx)-n+currently_remembered)%currently_remembered];
 }
