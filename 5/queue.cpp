@@ -2,6 +2,9 @@
 
 queue::queue(int n) 
     : capacity(n), cnt(0), idx(0) {
+    if(n <= 0) {
+        throw invalid_argument("Error: n < 0 !!");
+    }
     arr = new string[this->capacity];
 }
 queue::queue() : queue(1) {}
@@ -22,13 +25,15 @@ queue::queue(queue &&other)
     other.arr = nullptr;
 }
 queue& queue::operator=(queue &other){
-    this->idx = other.idx;
-    this->cnt = other.cnt;
-    this->capacity = other.capacity;
-    this->arr = new string[this->capacity];
-    //this->arr = other.arr;
-    for(int i=0; i<this->capacity; i++) {
-        this->arr[i] = other.arr[(i+idx)%other.capacity];
+    if(this != &other) {
+        this->idx = other.idx;
+        this->cnt = other.cnt;
+        this->capacity = other.capacity;
+        this->arr = new string[this->capacity];
+        //this->arr = other.arr;
+        for(int i=0; i<this->capacity; i++) {
+            this->arr[i] = other.arr[(i+idx)%other.capacity];
+        }
     }
     return *this;
 }
@@ -49,7 +54,7 @@ queue::~queue() {
     delete[] arr;
 }
 void queue::insert(string s) {
-    if(cnt == capacity) {
+    if(cnt >= capacity) {
         throw invalid_argument("Queue is full.");
     }
     this->arr[(this->idx+this->cnt+this->capacity)%this->capacity] = s;
