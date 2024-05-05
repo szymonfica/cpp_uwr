@@ -10,7 +10,7 @@ polynomial::polynomial(int n) : polynomial(n, 1){
 polynomial::polynomial(int n, double c)
     : n(n) {
     if(n < 0){
-        throw new invalid_argument("Degree must be positive.");
+        throw invalid_argument("Degree must be positive.");
     }
     this->a = new double[this->n+1];
     for(int i=0; i<=n; i++){
@@ -21,7 +21,7 @@ polynomial::polynomial(int n, double c)
 polynomial::polynomial(int n, const double a[]) 
     : n(n) {
     if(n < 0){
-        throw new invalid_argument("Degree must be positive.");
+        throw invalid_argument("Degree must be positive.");
     }
     this->a = new double[this->n+1];
     for(int i=0; i<n; i++) {
@@ -31,7 +31,7 @@ polynomial::polynomial(int n, const double a[])
 polynomial::polynomial(initializer_list<double> lst)
     : n(lst.size()-1) {
     if(n < 0){
-        throw new invalid_argument("Degree must be positive.");
+        throw invalid_argument("Degree must be positive.");
     }
     this->a = new double[this->n+1];
     int idx = 0;
@@ -48,8 +48,7 @@ polynomial::polynomial(const polynomial &other)
 }
 polynomial::polynomial(polynomial &&other)
     : n(other.n) {
-    this->a = other.a;
-    other.a = nullptr;
+    swap(this->a, other.a);
 }
 polynomial& polynomial::operator=(const polynomial &other) {
     if(this != &other) {
@@ -88,13 +87,13 @@ double polynomial::operator() (double x) const{
 }
 double polynomial::operator[] (int i) const {
     if(i < 0 || i > this->n){
-        throw new invalid_argument("Index must be between 0 and degree.");
+        throw invalid_argument("Index must be between 0 and degree.");
     }
     return a[i];
 }
 double& polynomial::operator[] (int i){
     if(i < 0 || i > this->n){
-        throw new invalid_argument("Index must be between 0 and degree.");
+        throw invalid_argument("Index must be between 0 and degree.");
     }
     return a[i];
 }
@@ -115,15 +114,13 @@ polynomial& polynomial::operator+= (const polynomial &w){
                 newa[i] = w.a[i];
             }
         }
-
         this->n = w.n;
-        a = newa; // Czy tu newa zniknie po kopii czy beda 2
+        a = newa;
     } 
     return *this;
 
 }
 polynomial& polynomial::operator-= (const polynomial &w){
-    cout<< "aaaa 1\n";
     if(w.n <= this->n){
         for(int i=0; i<=w.n; i++){
             this->a[i] -= w.a[i];
@@ -139,7 +136,6 @@ polynomial& polynomial::operator-= (const polynomial &w){
                 newa[i] = - w.a[i];
             }
         }
-
         this->n = w.n;
         a = newa; 
     } 
@@ -162,8 +158,6 @@ polynomial& polynomial::operator*= (const polynomial &w){
     for(int i=0; i<=this->n; i++){
         a[i] = newa[i];
     }
-    // a = newa; czemu to nie dziala
-
     return *this;
 }
 polynomial& polynomial::operator*= (double c){
@@ -194,7 +188,6 @@ polynomial operator+ (const polynomial &w, const polynomial &v){
             }
         }
     }
-
     return result;
 }
 polynomial operator- (const polynomial &w, const polynomial &v){
@@ -219,7 +212,6 @@ polynomial operator- (const polynomial &w, const polynomial &v){
             }
         }
     }
-
     return result;
 }
 polynomial operator* (const polynomial &w, const polynomial &v){
@@ -232,7 +224,6 @@ polynomial operator* (const polynomial &w, const polynomial &v){
             result.a[i + j] += w.a[i] * v.a[j];
         }
     }
-
     return result;
 }
 polynomial operator* (const polynomial &w, double c){
@@ -241,15 +232,22 @@ polynomial operator* (const polynomial &w, double c){
     for(int i=0; i<=w.n; i++){
         result.a[i] = w.a[i] * c;
     }
+    return result;
+}
+polynomial operator* (double c, const polynomial &w){
+    polynomial result = polynomial(w.n);
 
+    for(int i=0; i<=w.n; i++){
+        result.a[i] = w.a[i] * c;
+    }
     return result;
 }
 istream& operator>> (istream &in, polynomial &w){
-    cerr << "Podaj wymiar\n";
+    cerr << "Enter the dimension of the polynomial:\n";
     in >> w.n;
     w.a = new double[w.n + 1];
 
-    cerr << "Podaj kolejne wspolczynniki\n";
+    cerr << "Enter the next polynomial coefficients:\n";
     for(int i=0; i<=w.n; i++){
         in >> w.a[i];
     }
@@ -257,7 +255,7 @@ istream& operator>> (istream &in, polynomial &w){
 }
 ostream& operator<< (ostream &out, const polynomial &w){
     if(w.a == nullptr) {
-        throw new invalid_argument("Polynomial has been deleted.");
+        throw invalid_argument("Polynomial has been deleted.");
         return out;
     }
     for(int i=w.n; i>=0; i--){

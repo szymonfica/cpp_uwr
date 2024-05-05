@@ -14,7 +14,7 @@ private:
 public:
     polynomial();
     polynomial(int n);
-    polynomial(int n, double wsp);
+    polynomial(int n, double c);
     polynomial(int n, const double a[]);
     polynomial(initializer_list<double> lst);
     polynomial(const polynomial &p);
@@ -42,8 +42,6 @@ public:
     const int get_n();
 
 };
-
-
 
 
 
